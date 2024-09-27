@@ -3,8 +3,15 @@ import numpy as np
 import tensorflow as tf
 import streamlit as st
 
-# Load the DNN model for image classification
-used_model = tf.keras.models.load_model("densenet_model.h5")
+import gzip
+import tensorflow as tf
+
+with gzip.open('model.h5.gz', 'rb') as f:
+    with open('decompressed_model.h5', 'wb') as decompressed_file:
+        decompressed_file.write(f.read())
+# Load the decompressed model
+used_model = tf.keras.models.load_model('decompressed_model.h5')
+
 
 # Function to classify the image and return species class name (A, B, or C)
 def image_classifier(image_selected):
